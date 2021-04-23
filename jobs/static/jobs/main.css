@@ -1,0 +1,22 @@
+/*body{
+	background: url('../bg1.JPEG') no-repeat center center/cover;
+	height: 902px;
+	background-position: absolute;
+	z-index:-1;
+	opacity: 0.7;
+}*/
+body::before {
+	content: "";
+	position: absolute;
+	background: url("../jobs/images/bg1.jpeg") no-repeat center center/cover;
+	height: 104%;
+	width: 100%;
+	top: 80px;
+	left: 0px;
+	z-index: -1;
+	opacity: 0.6;
+}
+
+#nav {
+	background-color: #474c40 !important;
+}
