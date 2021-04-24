@@ -12,7 +12,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <!-- CSS import  -->
-    <link rel="stylesheet" href="{% static 'jobs/main.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'jobs/main.css' %}"> -->
 
     <!-- Set Title, if any  -->
     {% if title %}
@@ -23,33 +23,76 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="{% static 'jobs/images/logo2.png' %}" width="auto" height="70px" class="img-responsive"
-                    alt="logo"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'jobs-home' %}"><img src="{% static 'jobs/images/logo2.png' %}" width="auto"
+                    height="35px" class="img-responsive" alt="logo"></a>
+            <a class="navbar-brand mr-4" href="{% url 'jobs-home' %}">Job Overflow</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active m-1" aria-current="page" href="#">Post a Job</a>
-                    <a class="nav-link active m-1" href="#">Find resumes</a>
-                    <a class="nav-link active m-1" href="#">Products</a>
-                    <a class="nav-link active m-1" href="#">Resources</a>
-                    <a class="nav-link active m-1" href="#">Contact</a>
-                    <button type="button" class="btn btn-primary my-1 mx-2">Log In </button>
-                    <button type="button" class="btn btn-success my-1 mx-2">Sign In</button>
+        
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-link active m-1" aria-current="page" href="{% url 'jobs-create' %}">Post a Job</a>
+                    <a class="nav-link active m-1" href="{% url 'jobs-hire' %}">Find resumes</a>
+                    <a class="nav-link active m-1" href="{% url 'jobs-about' %}">About Us</a>
+                    <a class="nav-link active m-1" href="{% url 'jobs-contact' %}">Contact</a>
                 </div>
             </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'jobs-create' %}">Create Post</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    <a class="nav-item nav-link" href="#">My Profile</a>
+                {% else %}
+                    <a href="{% url 'register' %}"><button type="button" class="btn btn-primary my-1 mx-2">Sign Up</button></a>
+                    <a href="{% url 'login' %}"><button type="button" class="btn btn-success my-1 mx-2">Log In</button></a>
+                {% endif %}
+            </div>
         </div>
-    </nav>
+    </nav> 
+
+    <main role="main" class="container">
+        <div class="row mt-3">
+            <div class="col-md-8 ">
+                <div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class='alert alert-{{ message.tags }}'>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Separate section for messages, if any  -->
+    <!-- <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-{{ message.tags }}'>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div> -->
+
     <!-- <div class="container">
        <h1 class=" mt-5 mb-5">
          <strong>Do It With</strong>"Passion"<br><span><strong>Or Not At All !</strong></span>
        </h1>
     </div>
  -->
+
+
+
     <!-- Separate Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
         integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"

@@ -1,0 +1,12 @@
+{% extends 'jobs/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class='content-section'>
+    <h2>You have been successfully Logged out. Thankyou for spending time on Job Overflow!</h2>
+    <div class='border-top pt-3'>
+        <a class='ml-2' href='{% url "login" %}'>
+            <button class='btn btn-primary'>Login Again</button>
+        </a>
+    </div>
+</div>
+{% endblock content %}
