@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'jobs.apps.JobsConfig',
     'users.apps.UsersConfig',
+    'seekers.apps.SeekersConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

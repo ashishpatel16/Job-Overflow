@@ -14,9 +14,33 @@ class JobPost(models.Model):
     location = models.CharField(max_length=255)
     link = models.URLField(null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
+    skills_req = models.CharField(
+        max_length=200, default="No skills required.")
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('jobs-home')
+
+
+class Applicants(models.Model):
+    job = models.ForeignKey(
+        JobPost, related_name='applicants', on_delete=models.CASCADE)
+    applicant = models.ForeignKey(
+        User, related_name='applied_by', on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.applicant
+
+
+class Selected(models.Model):
+    job = models.ForeignKey(
+        JobPost, related_name='selected_for', on_delete=models.CASCADE)
+    applicant = models.ForeignKey(
+        User, related_name='selected_applicant', on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.applicant

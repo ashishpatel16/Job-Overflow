@@ -5,7 +5,8 @@ from PIL import Image
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="user_profile")
     profile_picture = models.ImageField(
         default='default.png', upload_to='profile_pics')
     full_name = models.CharField(max_length=200, null=True, blank=True)
@@ -13,7 +14,7 @@ class Profile(models.Model):
     is_recruiter = models.BooleanField(default=False, blank=False)
 
     def __str__(self):
-        return f"{self.user.username}'s Profile"
+        return self.user.username
 
     def save(self):
         super().save()
