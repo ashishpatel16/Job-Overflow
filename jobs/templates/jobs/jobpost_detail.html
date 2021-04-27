@@ -1,19 +1,22 @@
 {% extends 'jobs/base.html' %}
 {% block content %}
-<article class="media content-section">
-
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="#">{{ object.author }}</a>
-            <small class="text-muted">{{ object.date_posted | date:"F d, Y" }}</small>
+<article class="content-section">
+    <div class="job-update">
+        <div>
+            <!-- <a class="mr-2" href="#">{{ object.recruiter }}</a> -->
+            <p>{{ object.date_posted | date:"F d, Y" }}</p>
             {% if user == object.recruiter %}
-            <a class="btn btn-sm btn-primary mt-1 mb-1" href="{% url 'jobs-update' object.id %}">Update</a>
-            <a class="btn btn-sm btn-outline-danger mt-1 mb-1" href="{% url 'jobs-delete' object.id %}">Delete</a>
+            <a class="btn btn-sm btn-outline-info my-1 mx-1" href="{% url 'jobs-update' object.id %}">Update</a>
+            <a class="btn btn-sm btn-outline-danger my-1 mx-1" href="{% url 'jobs-delete' object.id %}">Delete</a>
             {% endif %}
         </div>
         <h2 class="article-title">{{ object.title }}</h2>
         <p class="article-content">{{ object.description }}</p>
-        <p class="article-content">{{ object.location }}</p>
+        <p class="font-weight-bold">{{ object.location }}</p>
+        <p class="font-weight-light">Posted By : {{ object.recruiter }}</p>
+    </div>
+    <div class="mx-auto" style="width: 200px;">
+        <button class='btn btn-outline-primary my-2' type='submit'>Apply Now</button>
     </div>
 </article>
 {% endblock content %}

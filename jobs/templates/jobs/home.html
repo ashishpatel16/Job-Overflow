@@ -1,32 +1,85 @@
 {% extends 'jobs/base.html' %}
 {% load static %}
-{% block meta_tags %}
-    <link rel="stylesheet" href="{% static 'jobs/main.css' %}">
-{% endblock meta_tags %}
 
 {% block content %}
-    {% for job in jobs %}
-    
-    <article class="media content-section mt-3">
-        
-        <div class="media-body dabba">
-            <div class="article-metadata">
-                <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.profile_picture.url }}"> -->
-                <a class="mr-2" href="#">{{ job.recruiter }}</a>
-                <small class="text-muted">{{ job.date_posted | date:"F d, Y" }}
-                </small>
+
+<div class="banner text-center">
+    <h1>PASSION IS ENERGY</h1>
+    <p>Your Passion brought you here.</p>
+</div>
+<!-- Searching options -->
+<div class="search-job text-center">
+    <input type="text" class="form-control" placeholder="search keyword..">
+    <input type="text" class="form-control" placeholder="search company..">
+    <input type="text" class="form-control" placeholder="search location..">
+    <input type="button" class="btn btn-primary btn-lg" value="Find Job">
+</div>
+<!-- End of Searching options -->
+
+<!-- Top Recruiters -->
+<section id="recruiters">
+    <div class="container text-center">
+        <h3>TOP RECRUITERS</h3>
+        <hr>
+        <div>
+            <p>Idhar maine thoda aalas karke, jo images already thi laptop mein, vo daal di! Ye change karna h baadmein
+            </p>
+            <img src="{% static 'jobs/images/1.png' %}" alt="rec1">
+            <img src="{% static 'jobs/images/2.png' %}" alt="rec2">
+            <img src="{% static 'jobs/images/3.png' %}" alt="rec3">
+            <img src="{% static 'jobs/images/2.png' %}" alt="rec4">
+            <img src="{% static 'jobs/images/4.jpeg' %}" alt="rec5">
+            <img src="{% static 'jobs/images/1.png' %}" alt="rec6">
+        </div>
+        <div>
+            <!-- <p>Idhar bhi same to same</p> -->
+            <img src="{% static 'jobs/images/1.png' %}" alt="rec7">
+            <img src="{% static 'jobs/images/2.png' %}" alt="rec8">
+            <img src="{% static 'jobs/images/3.png' %}" alt="rec9">
+            <img src="{% static 'jobs/images/2.png' %}" alt="rec10">
+            <img src="{% static 'jobs/images/4.jpeg' %}" alt="rec11">
+            <img src="{% static 'jobs/images/1.png' %}" alt="rec12">
+        </div>
+    </div>
+</section>
+
+
+<!-- Current Openings -->
+<section id="jobs">
+    <div class="container">
+        <h5 class="text-center">CURRENT OPENINGS</h5>
+        {% for job in jobs %}
+        <div class="company-details">
+            <div class="job-update">
+                <h4>
+                    <a id="job-title" href="{% url 'jobs-detail' job.pk %}"> <b>{{ job.title }}</b></a>
+                </h4><br>
+                <p>{{ job.company }}</p>
+                <i class="fa fa-briefcase"></i><span> 0-1 years</span><br>
+                <i class="fa fa-map-marker"></i><span> {{ job.location }}</span><br>
+                <!-- skills Required
+                    <p>Skills <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        <small> Html</small> <small>CSS</small> <small>JS</small> <small>BootStrap</small>
+                    </p> -->
+                <p>Description <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    {{ job.description }}</a></p>
             </div>
-            <!-- Post starts below -->
-            <h2>
-                <a class="article-title" href="{% url 'jobs-detail' job.id %}">{{ job.title }}</a>
-            </h2>
-            <div>
-                <p><strong>Description :</strong>  {{ job.description }}</p>
-                <p><strong>Location :</strong> {{ job.location }}</p>
+            <div class="apply-btn">
+                <button type="button" class="btn btn-primary">Apply</button>
             </div>
         </div>
-    </article>
-    
-    {% endfor %}
+        {% endfor %}
+
+    </div>
+    <ul class="page-link text-center">
+        <li class="left-arrow">&#8592;</li>
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li class="right-arrow">&#8594;</li>
+    </ul>
+</section>
 
 {% endblock content %}

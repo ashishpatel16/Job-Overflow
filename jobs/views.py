@@ -9,11 +9,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 # Create your views here.
 
 
-def index(request):
-    context = {'title': 'Job Overflow',
-               'css_attached': "jobs/main.css"
-               }
-    return render(request, 'jobs/home.html', context)
+def testimonials(request):
+    return render(request, 'jobs/testimonials.html')
 
 
 @login_required

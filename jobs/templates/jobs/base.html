@@ -3,14 +3,6 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="{% static 'jobs/images/logo11.png' %} ">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
     <!-- CSS import  -->
     <!-- <link rel="stylesheet" href="{% static 'jobs/main.css' %}"> -->
     {% block meta_tags %} {% endblock meta_tags %}
@@ -22,76 +14,103 @@
     {% endif %}
 </head>
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="logo11.png">
+    <!-- Bootstrap CSS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!-- CSS import  -->
+    <link rel="stylesheet" href="{% static 'jobs/main.css' %}">
+    <!-- Set Title, if any  -->
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Job Overflow</title>
+    {% endif %}
+</head>
+
+
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'jobs-home' %}"><img src="{% static 'jobs/images/logo2.png' %}" width="auto"
-                    height="35px" class="img-responsive" alt="logo"></a>
-            <a class="navbar-brand mr-4" href="{% url 'jobs-home' %}">Job Overflow</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav mr-auto">
-                    <a class="nav-link active m-1" aria-current="page" href="{% url 'jobs-create' %}">Post a Job</a>
-                    <a class="nav-link active m-1" href="{% url 'jobs-hire' %}">Find resumes</a>
-                    <a class="nav-link active m-1" href="{% url 'jobs-about' %}">About Us</a>
-                    <a class="nav-link active m-1" href="{% url 'jobs-contact' %}">Contact</a>
-                </div>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'jobs-create' %}">Create Post</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    <a class="nav-item nav-link" href="#">My Profile</a>
-                {% else %}
-                    <a href="{% url 'register' %}"><button type="button" class="btn btn-primary my-1 mx-2">Sign Up</button></a>
-                    <a href="{% url 'login' %}"><button type="button" class="btn btn-success my-1 mx-2">Log In</button></a>
-                {% endif %}
-            </div>
-        </div>
-    </nav> 
-
-    <main role="main" class="container">
-        <div class="row mt-3">
-            <div class="col-md-8 ">
-                <div>
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class='alert alert-{{ message.tags }}'>
-                        {{ message }}
+    <!-- header -->
+    <section id="header">
+        <div class="menu">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'jobs-home' %}"><img src="{% static 'jobs/images/logo2.png' %}" width="auto" height="45px" class="img-responsive"
+                            alt="logo">
+                        <!-- <span style="margin-top: 12px; margin-left: 8px;">JobOverflow</span> -->
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{% url 'jobs-create' %}">POST JOB</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{% url 'jobs-hire' %}">FIND RESUMES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{% url 'testimonials' %}">TESTIMONIALS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2" href="{% url 'jobs-about' %}">ABOUT</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <!-- <button type="button" class="btn btn-primary my-1 mx-2">SIGN UP</button>
+                            <button type="button" class="btn btn-success my-1 mx-2">LOG IN</button> -->
+                            {% if user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{% url 'jobs-create' %}">Create Post</a>
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                            <a class="nav-item nav-link" href="#">My Profile</a>
+                            {% else %}
+                            <a href="{% url 'register' %}"><button type="button" class="btn btn-primary my-1 mx-2">Sign Up</button></a>
+                            <a href="{% url 'login' %}"><button type="button" class="btn btn-success my-1 mx-2">Log In</button></a>
+                            {% endif %}
+                        </ul>
+                    
                     </div>
-                    {% endfor %}
-                    {% endif %}
                 </div>
-                {% block content %}{% endblock %}
-            </div>
+            </nav>
         </div>
-    </main>
 
-    <!-- Separate section for messages, if any  -->
-    <!-- <div>
-        {% if messages %}
+        <!-- Messages, of any  -->
+        <div>
+            {% if messages %}
             {% for message in messages %}
-                <div class='alert alert-{{ message.tags }}'>
-                    {{ message }}
-                </div>
+            <div class='alert alert-{{ message.tags }}'>
+                {{ message }}
+            </div>
             {% endfor %}
-        {% endif %}
-    </div> -->
+            {% endif %}
+        </div>
+        <!-- End of Messages  -->
 
-    <!-- <div class="container">
-       <h1 class=" mt-5 mb-5">
-         <strong>Do It With</strong>"Passion"<br><span><strong>Or Not At All !</strong></span>
-       </h1>
-    </div>
- -->
+        {% block content %}{% endblock %}
 
+        
+    </section>
 
+    
+    
+    <!------------ footer ------------->
+    <section id="footer" class="text-center">
+        <img src="{% static 'jobs/images/logo11.png' %}" width="auto" height="85px" alt="footer-logo">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente nobis dolorum minima ipsum.<br>Lorem ipsum
+            dolor sit amet, consectetur adipisicing.</p>
+    </section>
 
     <!-- Separate Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
@@ -100,7 +119,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
-    <!-- <script src="./index.js"></script> -->
+        <!-- JS script goes below here -->
+    <script src="{% static 'jobs/index.js' %}"></script>
 </body>
 
 </html>
