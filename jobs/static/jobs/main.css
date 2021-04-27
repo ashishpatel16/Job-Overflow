@@ -21,3 +21,16 @@ body::before {
 #nav {
 	background-color: #474c40 !important;
 }
+
+.content-section {
+	opacity: 1;
+	background: 50%;
+	padding: 10px 20px;
+	border: 1px solid #000000;
+	border-radius: 3px;
+	margin-bottom: 20px;
+}
+/* 
+body {
+	background-color: beige;
+} */

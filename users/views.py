@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserForm
 # Create your views here.
 
 
@@ -19,3 +19,9 @@ def register(request):
         # This is trigerred by GET requests, hence return a new empty Form object
         form = UserRegistrationForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+def test(request):
+    form = UserForm()
+    context = {'form': form}
+    return render(request, 'users/test.html', context)

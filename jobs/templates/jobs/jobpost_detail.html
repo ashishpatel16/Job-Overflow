@@ -1,0 +1,19 @@
+{% extends 'jobs/base.html' %}
+{% block content %}
+<article class="media content-section">
+
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ object.author }}</a>
+            <small class="text-muted">{{ object.date_posted | date:"F d, Y" }}</small>
+            {% if user == object.recruiter %}
+            <a class="btn btn-sm btn-primary mt-1 mb-1" href="{% url 'jobs-update' object.id %}">Update</a>
+            <a class="btn btn-sm btn-outline-danger mt-1 mb-1" href="{% url 'jobs-delete' object.id %}">Delete</a>
+            {% endif %}
+        </div>
+        <h2 class="article-title">{{ object.title }}</h2>
+        <p class="article-content">{{ object.description }}</p>
+        <p class="article-content">{{ object.location }}</p>
+    </div>
+</article>
+{% endblock content %}

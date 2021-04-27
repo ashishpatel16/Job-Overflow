@@ -1,6 +1,32 @@
 {% extends 'jobs/base.html' %}
-{% block content %}
+{% load static %}
+{% block meta_tags %}
+    <link rel="stylesheet" href="{% static 'jobs/main.css' %}">
+{% endblock meta_tags %}
 
-<h2>Homepage</h2>
+{% block content %}
+    {% for job in jobs %}
+    
+    <article class="media content-section mt-3">
+        
+        <div class="media-body dabba">
+            <div class="article-metadata">
+                <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.profile_picture.url }}"> -->
+                <a class="mr-2" href="#">{{ job.recruiter }}</a>
+                <small class="text-muted">{{ job.date_posted | date:"F d, Y" }}
+                </small>
+            </div>
+            <!-- Post starts below -->
+            <h2>
+                <a class="article-title" href="{% url 'jobs-detail' job.id %}">{{ job.title }}</a>
+            </h2>
+            <div>
+                <p><strong>Description :</strong>  {{ job.description }}</p>
+                <p><strong>Location :</strong> {{ job.location }}</p>
+            </div>
+        </div>
+    </article>
+    
+    {% endfor %}
 
 {% endblock content %}
