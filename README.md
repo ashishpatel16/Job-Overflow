@@ -1,9 +1,10 @@
+
 # Job-Overflow
 ## Project Summary
 
 This website is kinda similiar to what a conventional Job Search portal is supposed to be, but we aim at providing a platform for part-time jobs, technical and non technical both.
 
-
+![ss-home](https://user-images.githubusercontent.com/59373024/116274282-24446480-a7a0-11eb-857a-094402a3e83d.png)
 ---
 
 ## Quick Installation Guide
