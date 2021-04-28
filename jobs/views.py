@@ -43,6 +43,7 @@ class JobListView(ListView):
     template_name = 'jobs/home.html'
     context_object_name = 'jobs'
     ordering = ['-date_posted']
+    paginate_by = 5
 
 
 class JobCreateView(LoginRequiredMixin, CreateView):
@@ -92,3 +93,29 @@ class JobDetailView(DetailView):
         if AppliedJobs.objects.filter(job=jobpost, user=logged_user).first() != None:
             context['has_applied'] = 1
         return context
+
+
+def search_by_company(request, company_name):
+    found = []
+    for job in JobPost.objects.filter(company=company_name):
+        found.append(job)
+    return render(request, 'jobs/search_results.html', {'search_results': job})
+
+
+def search(request):
+    keyword = request.GET.get('key')
+    company = request.GET.get('com')
+    loc = request.GET.get('loc')
+    jobs = []
+    for job in JobPost.objects.filter(company=company, location=loc).order_by('-date_posted'):
+        jobs.append(job)
+
+    return render(request, 'jobs/search_results.html', {'searched_jobs': jobs})
+
+
+def search_by_title(request):
+    pass
+
+
+def search_by_skill():
+    pass

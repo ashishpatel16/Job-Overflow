@@ -23,6 +23,16 @@
 			<li>{{ skill.skill }}</li>
 			{% endfor %}
 		</ul>
+		{% if posted_jobs %}
+		<h4>Jobs Posted by {{ user.username }} ({{posted_jobs|length}})</h4>
+		<div>
+			<ul>
+				{% for job in posted_jobs %}
+				<a href="{% url 'jobs-detail' job.pk %}"><li>{{ job.title }}</li></a>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock content %}

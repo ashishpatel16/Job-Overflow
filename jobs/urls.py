@@ -13,5 +13,6 @@ urlpatterns = [
     path('contact/', views.contact, name='jobs-contact'),
     path('about/', views.about, name='jobs-about'),
     path('apply/<int:job_id>', seeker_views.apply, name='apply'),
-    path('testimonials/',views.testimonials,name='testimonials')
+    path('testimonials/',views.testimonials,name='testimonials'),
+    path('search/', views.search, name='search'),
 ]

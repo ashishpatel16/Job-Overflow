@@ -9,13 +9,18 @@
 </div>
 <!-- Searching options -->
 <div class="search-job text-center">
-    <input type="text" class="form-control" placeholder="search keyword..">
-    <input type="text" class="form-control" placeholder="search company..">
-    <input type="text" class="form-control" placeholder="search location..">
-    <input type="button" class="btn btn-primary btn-lg" value="Find Job">
+    <form method="get" action="{% url 'search' %}">
+        
+        <input type="text" name="key" class="form-control" placeholder="search keyword..">
+        <input type="text" name="com" class="form-control" placeholder="search company..">
+        <input type="text" name="loc" class="form-control" placeholder="search location..">
+        <input type="submit" class="btn btn-primary btn-lg" value="Find Job">
+    </form>
 </div>
 <!-- End of Searching options -->
-
+{% block searchresults %} 
+<!-- Search results -->
+{% endblock searchresults %}
 <!-- Top Recruiters -->
 <section id="recruiters">
     <div class="container text-center">
@@ -64,14 +69,39 @@
                 <p>Description <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                     {{ job.description }}</a></p>
             </div>
+            <!-- Apply button  -->
             <div class="apply-btn">
-                <button type="button" class="btn btn-primary">Apply</button>
+                <a href="{% url 'apply' job.pk %}">
+                    <button type="button" class="btn btn-primary">Apply</button>
+                </a>
             </div>
         </div>
         {% endfor %}
 
     </div>
+    <!-- Pagination links -->
     <ul class="page-link text-center">
+    {% if is_paginated %}
+        <!-- Adding Previous page link -->
+        {% if page_obj.has_previous %}
+            <a href="?page=1"><li class="left-arrow">&#8592;</li></a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %} 
+            {% if page_obj.number == num %} 
+                <a href="?page={{ num }}"><li class="active">{{ num }}</li></a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}"><li>{{ num }}</li></a>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Adding Next page link -->
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number  }}"><li class="right-arrow">&#8594;</li></a>
+        {% endif %}
+    {% endif %}
+    </ul>
+    <!-- <ul class="page-link text-center">
         <li class="left-arrow">&#8592;</li>
         <li class="active">1</li>
         <li>2</li>
@@ -79,7 +109,7 @@
         <li>4</li>
         <li>5</li>
         <li class="right-arrow">&#8594;</li>
-    </ul>
+    </ul> -->
 </section>
 
 {% endblock content %}
