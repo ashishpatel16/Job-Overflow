@@ -1,0 +1,28 @@
+{% extends 'jobs/base.html' %} {% block content %}
+<div class="content-section">
+	<div class="media">
+		<div class="row justify-content-center">
+			<img
+				class="col-3 rounded-circle my-3"
+				src="{{ user_profile.profile_picture.url }}"
+			/>
+		</div>
+		<div class="row justify-content-center">
+			<h2 class="col-2 account-heading">@{{ user.username }}</h2>
+			<h2 class="col-2 account-heading">{{ user.email }}</h2>
+		</div>
+	</div>
+	<div class="content-section">
+		<p>Full Name : {{user_profile.full_name}}</p>
+		<p>Location : {{user_profile.location}}</p>
+		<p>Resume : <a href="{{ user_profile.resume.url }}">Open</a></p>
+
+		<h4>Skills</h4>
+		<ul>
+			{% for skill in user_skills %}
+			<li>{{ skill.skill }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock content %}

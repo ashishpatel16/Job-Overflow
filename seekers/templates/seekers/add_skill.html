@@ -1,0 +1,14 @@
+{% extends 'jobs/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form method='POST'>
+        {% csrf_token %}
+        <fieldset class='form-group mb-2'>
+            <legend class='border-bottom mb-4'>Add new Skill</legend>
+            {{ form | crispy }}
+        </fieldset>
+        <div class='form-group'>
+            <button class='btn btn-outline-info my-3' type='submit'>Save Changes</button>
+        </div>
+    </form>
+{% endblock content %}

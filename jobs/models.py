@@ -15,7 +15,7 @@ class JobPost(models.Model):
     link = models.URLField(null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     skills_req = models.CharField(
-        max_length=200, default="No skills required.")
+        max_length=200, default="No skills required.", null=True)
 
     def __str__(self):
         return self.title
