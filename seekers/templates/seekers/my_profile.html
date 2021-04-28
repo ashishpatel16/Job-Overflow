@@ -38,6 +38,15 @@
 					Save Changes
 				</button>
 			</div>
+			<div>
+				<ul>
+					{% for job in applied_jobs %}
+					<a href="{% url 'jobs-detail' job.job.id %}"
+						><li>{{ job.job.title }}</li></a
+					>
+					{% endfor %}
+				</ul>
+			</div>
 		</form>
 	</div>
 

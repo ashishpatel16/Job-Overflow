@@ -1,4 +1,5 @@
 from . import views
+from seekers import views as seeker_views
 from django.urls import path, include
 from .views import JobListView, JobCreateView, JobUpdateView, JobDeleteView, JobDetailView
 
@@ -11,5 +12,6 @@ urlpatterns = [
     path('hire/', views.hire, name='jobs-hire'),
     path('contact/', views.contact, name='jobs-contact'),
     path('about/', views.about, name='jobs-about'),
+    path('apply/<int:job_id>', seeker_views.apply, name='apply'),
     path('testimonials/',views.testimonials,name='testimonials')
 ]

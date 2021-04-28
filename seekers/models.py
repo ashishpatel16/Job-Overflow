@@ -52,4 +52,4 @@ class AppliedJobs(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.job.title} job applied by {self.user.username}"
+        return f"{self.job.title} job applied by {self.user.username}" 

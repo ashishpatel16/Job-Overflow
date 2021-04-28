@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import JobSeeker, Skill, SavedJobs, AppliedJobs
 from .forms import ProfileForm, SkillUpdateForm
 from django.contrib.auth.models import User
+from jobs.models import JobPost
+from django.contrib import messages
 
 # Create your views here.
 
@@ -36,7 +38,8 @@ def my_profile(request):
         'user_profile': user_profile,
         'user_skills': skillset,
         'form_profile': form_profile,
-        'form_skill': form_skill
+        'form_skill': form_skill,
+        'applied_jobs': get_applied_jobs(logged_user)
     }
     return render(request, 'seekers/my_profile.html', context)
 
@@ -56,6 +59,7 @@ def view_profile(request, user_id):
     return render(request, 'seekers/profile_detail.html', context)
 
 
+@login_required
 def add_skill(request):
     user = request.user
     if request.method == "POST":
@@ -68,3 +72,28 @@ def add_skill(request):
     else:
         form = SkillUpdateForm()
     return render(request, 'seekers/add_skill.html', {'form': form})
+
+
+@login_required
+def apply(request, job_id):
+    applicant = request.user
+    # Tables to update : Applicants, AppliedJobs
+    selected_job = JobPost.objects.filter(id=job_id).first()
+    if AppliedJobs.objects.filter(user=applicant, job=selected_job):
+        messages.warning(
+            request, "Luckily You've already applied to this job.")
+    else:
+        messages.success(
+            request, f'Congratulations! You succesfully applied to {selected_job.title}.')
+        applied_job = AppliedJobs(job=selected_job, user=applicant)
+        applied_job.save()
+    return redirect('jobs-detail', pk=job_id)
+
+
+def get_applied_jobs(user):
+    applicant = user
+    jobs = []
+    for job in AppliedJobs.objects.filter(user=applicant):
+        jobs.append(job)
+
+    return jobs

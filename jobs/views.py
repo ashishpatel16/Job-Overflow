@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import JobPost
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from seekers.models import AppliedJobs
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 # Create your views here.
 
@@ -83,3 +84,11 @@ class JobDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class JobDetailView(DetailView):
     model = JobPost
+
+    def get_context_data(self, **kwargs):
+        context = super(JobDetailView, self).get_context_data(**kwargs)
+        logged_user = self.request.user
+        jobpost = self.get_object()
+        if AppliedJobs.objects.filter(job=jobpost, user=logged_user).first() != None:
+            context['has_applied'] = 1
+        return context
