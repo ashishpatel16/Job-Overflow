@@ -95,19 +95,15 @@ class JobDetailView(DetailView):
         return context
 
 
-def search_by_company(request, company_name):
-    found = []
-    for job in JobPost.objects.filter(company=company_name):
-        found.append(job)
-    return render(request, 'jobs/search_results.html', {'search_results': job})
-
-
 def search(request):
     keyword = request.GET.get('key')
     company = request.GET.get('com')
     loc = request.GET.get('loc')
     jobs = []
-    for job in JobPost.objects.filter(company=company, location=loc).order_by('-date_posted'):
+    for job in JobPost.objects.filter(company=company).order_by('-date_posted'):
+        jobs.append(job)
+
+    for job in JobPost.objects.filter(location=loc).order_by('-date_posted'):
         jobs.append(job)
 
     return render(request, 'jobs/search_results.html', {'searched_jobs': jobs})

@@ -18,9 +18,36 @@
     </form>
 </div>
 <!-- End of Searching options -->
-{% block searchresults %} 
-<!-- Search results -->
-{% endblock searchresults %}
+    <!-- Search results -->
+    {% if searched_jobs %}
+    <div class="container">
+        <h5 class="text-center">Search Results</h5>
+        {% for job in searched_jobs %}
+        <div class="company-details">
+            <div class="job-update">
+                <h4>
+                    <a id="job-title" href="{% url 'jobs-detail' job.pk %}"> <b>{{ job.title }}</b></a>
+                </h4><br>
+                <p>Company : {{ job.company }}</p>
+                <i class="fa fa-briefcase"></i><span> 0-1 years</span><br>
+                <i class="fa fa-map-marker"></i><span> {{ job.location }}</span><br>
+                    <p>Skills <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        <small> {{job.skills_req}}</small>
+                    </p>
+                
+                <p>Description <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    {{ job.description }}</a></p>
+            </div>
+            <!-- Apply button  -->
+            <div class="apply-btn">
+                <a href="{% url 'apply' job.pk %}">
+                    <button type="button" class="btn btn-primary">Apply</button>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 <!-- Top Recruiters -->
 <section id="recruiters">
     <div class="container text-center">
