@@ -33,12 +33,8 @@
 				<li>{{ skill }}</li>
 				{% endfor %}
 			</ul>
-			<div class="form-group mx-2 my-3">
-				<button class="btn btn-outline-info my-3" type="submit">
-					Save Changes
-				</button>
-			</div>
 			<div>
+				<h4>Jobs Applied ({{applied_jobs|length}})</h4>
 				<ul>
 					{% for job in applied_jobs %}
 					<a href="{% url 'jobs-detail' job.job.id %}"
@@ -46,6 +42,24 @@
 					>
 					{% endfor %}
 				</ul>
+			</div>
+			<!-- posted jobs  -->
+			{% if posted_jobs %}
+			<h4>Jobs Posted ({{posted_jobs|length}})</h4>
+			<div>
+				<ul>
+					{% for job in posted_jobs %}
+					<a href="{% url 'jobs-detail' job.pk %}"><li>{{ job.title }}</li></a>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+
+			<!-- End of form -->
+			<div class="form-group mx-2 my-3">
+				<button class="btn btn-outline-info my-3" type="submit">
+					Save Changes
+				</button>
 			</div>
 		</form>
 	</div>

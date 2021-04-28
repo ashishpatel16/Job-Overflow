@@ -39,7 +39,8 @@ def my_profile(request):
         'user_skills': skillset,
         'form_profile': form_profile,
         'form_skill': form_skill,
-        'applied_jobs': get_applied_jobs(logged_user)
+        'applied_jobs': get_applied_jobs(logged_user),
+        'posted_jobs': get_posted_jobs(logged_user)
     }
     return render(request, 'seekers/my_profile.html', context)
 
@@ -54,7 +55,8 @@ def view_profile(request, user_id):
     context = {
         'user': user,
         'user_profile': user_profile,
-        'user_skills': skillset
+        'user_skills': skillset,
+        'posted_jobs' :get_posted_jobs(user_profile.user)
     }
     return render(request, 'seekers/profile_detail.html', context)
 
@@ -94,6 +96,15 @@ def get_applied_jobs(user):
     applicant = user
     jobs = []
     for job in AppliedJobs.objects.filter(user=applicant):
+        jobs.append(job)
+
+    return jobs
+
+
+def get_posted_jobs(user):
+    recruiter = user
+    jobs = []
+    for job in JobPost.objects.filter(recruiter=recruiter):
         jobs.append(job)
 
     return jobs
