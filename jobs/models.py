@@ -10,8 +10,8 @@ class JobPost(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     recruiter = models.ForeignKey(User, on_delete=models.CASCADE)
-    company = models.CharField(max_length=200, default="",null=True)
-    # stipend = models.CharField(max_length=200, default="",null=True)
+    company = models.CharField(max_length=200, default="", null=True)
+    stipend = models.FloatField(blank=True, null=True)
     location = models.CharField(max_length=255)
     link = models.URLField(null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
@@ -47,14 +47,21 @@ class Selected(models.Model):
         return self.applicant
 
 
-# class JobApplication(models.Model):
-#     job = models.ForeignKey(
-#         JobPost, related_name='job_application', on_delete=models.CASCADE)
-#     applicant = models.ForeignKey(
-#         User, related_name='applicant', on_delete=models.CASCADE)
-#     date_applied = models.DateTimeField(default=timezone.now)
+class JobApplication(models.Model):
+    job = models.ForeignKey(
+        JobPost, related_name='job_application', on_delete=models.CASCADE)
+    applicant = models.ForeignKey(
+        User, related_name='job_applicant', on_delete=models.CASCADE)
+    date_applied = models.DateTimeField(default=timezone.now)
 
-#     full_name = models.CharField(max_length=200, blank=False)
-#     address = models.CharField(max_length=255, blank=False)
-#     resume = models.FileField(null=True, upload_to="resumes", blank=True)
-    
+    full_name = models.CharField(max_length=200, blank=False)
+    address = models.CharField(max_length=255, blank=False)
+    resume = models.FileField(null=True, upload_to="resumes", blank=True)
+    email = models.EmailField(blank=False)
+    additional_info = models.CharField(max_length=500,blank=True)
+
+    def __str__(self):
+        return self.job.title
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)

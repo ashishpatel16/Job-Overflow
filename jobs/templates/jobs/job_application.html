@@ -1,0 +1,18 @@
+{% extends 'jobs/base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="mx-auto my-4" style="width: 75%">
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group p-2 ">
+				<legend class="border-bottom mb-4 row justify-content-center">
+					Apply Now
+				</legend>
+				{{ form | crispy}}
+			</fieldset>
+			<div class="form-group px-2">
+				<button class="btn btn-outline-info mt-1" type="submit">Apply</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock content %}

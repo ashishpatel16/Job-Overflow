@@ -111,7 +111,8 @@
     {% if is_paginated %}
         <!-- Adding Previous page link -->
         {% if page_obj.has_previous %}
-            <a href="?page=1"><li class="left-arrow">&#8592;</li></a>
+            <a href="?page=1"><li class="mx-1">First</li></a>
+            <a href="?page={{ page_obj.previous_page_number  }}"><li class="left-arrow">&#8592;</li></a>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %} 
@@ -125,18 +126,10 @@
         <!-- Adding Next page link -->
         {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number  }}"><li class="right-arrow">&#8594;</li></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}"><li class="mx-1">Last</li></a>
         {% endif %}
     {% endif %}
     </ul>
-    <!-- <ul class="page-link text-center">
-        <li class="left-arrow">&#8592;</li>
-        <li class="active">1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li class="right-arrow">&#8594;</li>
-    </ul> -->
 </section>
 
 {% endblock content %}

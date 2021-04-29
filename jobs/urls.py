@@ -12,7 +12,7 @@ urlpatterns = [
     path('hire/', views.hire, name='jobs-hire'),
     path('contact/', views.contact, name='jobs-contact'),
     path('about/', views.about, name='jobs-about'),
-    path('apply/<int:job_id>', seeker_views.apply, name='apply'),
-    path('testimonials/',views.testimonials,name='testimonials'),
+    path('apply/<int:job_id>', views.apply, name='apply'),
+    path('testimonials/', views.testimonials, name='testimonials'),
     path('search/', views.search, name='search'),
 ]

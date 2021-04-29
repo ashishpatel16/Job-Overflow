@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import JobForm
+from .forms import JobForm, JobApplicationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import JobPost
+from .models import JobPost, JobApplication
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from seekers.models import AppliedJobs
+from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 # Create your views here.
 
@@ -25,6 +26,7 @@ def post_job(request):
 
 def hire(request):
     context = {'title': 'Hire someone'}
+    populate_db()
     return render(request, 'jobs/hire.html', context)
 
 
@@ -109,9 +111,46 @@ def search(request):
     return render(request, 'jobs/search_results.html', {'searched_jobs': jobs})
 
 
-def search_by_title(request):
-    pass
+def populate_db():
+    xwords = ['Jobs', 'Recruit', 'Intern', 'Worker', 'Help', 'someone']
+    ywords = ['Needed', 'Wanted', 'Demanded', 'Desired']
+    rec = ['ashish', 'recruitergod69']
+    gibberish = [
+        'Strong proficiency in JavaScript, including DOM manipulation and the JavaScript object model', 'The ideal candidate is a self-motivated, multi-tasker, and demonstrated team-player. You will be a lead developer responsible for the development of new software products and enhancements to existing products. You should excel in working with large-scale applications and frameworks and have outstanding communication and leadership skills.', 'Candidate with Strong proficiency in JavaScript, including DOM manipulation and the JavaScript object model']
+    loc = ['surat', 'Area69', 'India', 'Bangalore']
+
+    users = User.objects.all()
+    for user in users:
+        for fname in xwords:
+            for lname in ywords:
+                for desc in gibberish:
+                    for ven in loc:
+                        new_job = JobPost(
+                            recruiter=user, title=f'{fname} {lname}', description=desc, location=ven)
+                        new_job.save()
+                        print('Success')
 
 
-def search_by_skill():
-    pass
+@login_required
+def apply(request, job_id):
+    applicant = request.user
+    # Tables to update : Applicants, AppliedJobs
+
+    if request.method == 'POST':
+        form = JobApplicationForm(request.POST)
+        if form.is_valid:
+            job = JobPost.objects.filter(id=job_id).first()
+            application = form.save(commit=False)
+            application.job = job
+            AppliedJobs(job=job, user=applicant).save()
+            application.applicant = applicant
+            application.save()
+            messages.success(
+                request, f'Congratulations! You succesfully applied to {job.title}.')
+            return redirect('jobs-detail', pk=job_id)
+    else:
+        form = JobApplicationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'jobs/job_application.html', context)
