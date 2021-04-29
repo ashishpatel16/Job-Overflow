@@ -1,11 +1,26 @@
-{% extends 'jobs/home.html' %}
+{% extends 'jobs/base.html' %}
 {% load static %}
 
-{% block searchresults %} 
+{% block content %} 
 
+<div class="banner text-center">
+    <h1>PASSION IS ENERGY</h1>
+    <p>Your Passion brought you here.</p>
+</div>
+<!-- Searching options -->
+<div class="search-job text-center">
+    <form method="get" action="{% url 'search' %}">
+        
+        <input type="text" name="key" class="form-control" placeholder="search keyword..">
+        <input type="text" name="com" class="form-control" placeholder="search company..">
+        <input type="text" name="loc" class="form-control" placeholder="search location..">
+        <input type="submit" class="btn btn-primary btn-lg" value="Find Job">
+    </form>
+</div>
+    <!-- Search results -->
     <div class="container">
-        <h5 class="text-center">Search Results</h5>
-        {% for job in searched_jobs %}
+        <h5 class="text-center">Search Results ({{searched_jobs|length}})</h5>
+        {% for job in page_obj %}
         <div class="company-details">
             <div class="job-update">
                 <h4>
@@ -32,4 +47,28 @@
 
     </div>
 
-{% endblock searchresults %}
+    <ul class="page-link text-center">
+        <!-- Adding Previous page link -->
+        {% if page_obj.has_previous %}
+            <a href="?page=1{{link}}">
+                <li class="mx-1">First</li></a>
+            <a href="?page={{ page_obj.previous_page_number  }}{{link}}"><li class="left-arrow">&#8592;</li></a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %} 
+            {% if page_obj.number == num %} 
+                <a href="?page={{ num }}{{link}}"><li class="active">{{ num }}</li></a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{{link}}"><li>{{ num }}</li></a>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Adding Next page link -->
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number  }}{{link}}"><li class="right-arrow">&#8594;</li></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}{{link}}"><li class="mx-1">Last</li></a>
+        {% endif %}
+    </ul>
+    <div class="text-center mb-5 mt-3">Page {{page_obj.number}} of {{page_obj.paginator.num_pages }}</div>
+
+{% endblock content %}

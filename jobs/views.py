@@ -7,7 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from seekers.models import AppliedJobs
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from collections import OrderedDict
 # Create your views here.
 
 
@@ -102,13 +104,31 @@ def search(request):
     company = request.GET.get('com')
     loc = request.GET.get('loc')
     jobs = []
-    for job in JobPost.objects.filter(company=company).order_by('-date_posted'):
-        jobs.append(job)
+    if company != "":
+        for job in JobPost.objects.filter(company__iexact=company).order_by('-date_posted'):
+            jobs.append(job)
 
-    for job in JobPost.objects.filter(location=loc).order_by('-date_posted'):
-        jobs.append(job)
+    if loc != "":
+        for job in JobPost.objects.filter(location__iexact=loc).order_by('-date_posted'):
+            jobs.append(job)
 
-    return render(request, 'jobs/search_results.html', {'searched_jobs': jobs})
+    if keyword != "":
+        for job in JobPost.objects.filter(title__icontains=keyword).order_by('-date_posted'):
+            jobs.append(job)
+        for job in JobPost.objects.filter(description__icontains=keyword).order_by('-date_posted'):
+            jobs.append(job)
+
+    p = Paginator(jobs, 10)
+    page_num = request.GET.get('page')
+    page_obj = p.get_page(page_num)
+
+    context = {
+        'searched_jobs': jobs,
+        'page_obj': page_obj,
+        'link': f'&key={keyword}&com={company}&loc={loc}'
+    }
+
+    return render(request, 'jobs/search_results.html', context)
 
 
 def populate_db():
@@ -134,7 +154,6 @@ def populate_db():
 @login_required
 def apply(request, job_id):
     applicant = request.user
-    # Tables to update : Applicants, AppliedJobs
 
     if request.method == 'POST':
         form = JobApplicationForm(request.POST)
