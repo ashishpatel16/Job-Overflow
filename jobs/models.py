@@ -56,9 +56,10 @@ class JobApplication(models.Model):
 
     full_name = models.CharField(max_length=200, blank=False)
     address = models.CharField(max_length=255, blank=False)
-    resume = models.FileField(null=True, upload_to="resumes", blank=True)
+    resume = models.FileField(
+        null=True, upload_to="applicant_resumes", blank=True)
     email = models.EmailField(blank=False)
-    additional_info = models.CharField(max_length=500,blank=True)
+    additional_info = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.job.title

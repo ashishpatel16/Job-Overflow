@@ -28,7 +28,6 @@ def post_job(request):
 
 def hire(request):
     context = {'title': 'Hire someone'}
-    populate_db()
     return render(request, 'jobs/hire.html', context)
 
 
@@ -131,26 +130,6 @@ def search(request):
     return render(request, 'jobs/search_results.html', context)
 
 
-def populate_db():
-    xwords = ['Jobs', 'Recruit', 'Intern', 'Worker', 'Help', 'someone']
-    ywords = ['Needed', 'Wanted', 'Demanded', 'Desired']
-    rec = ['ashish', 'recruitergod69']
-    gibberish = [
-        'Strong proficiency in JavaScript, including DOM manipulation and the JavaScript object model', 'The ideal candidate is a self-motivated, multi-tasker, and demonstrated team-player. You will be a lead developer responsible for the development of new software products and enhancements to existing products. You should excel in working with large-scale applications and frameworks and have outstanding communication and leadership skills.', 'Candidate with Strong proficiency in JavaScript, including DOM manipulation and the JavaScript object model']
-    loc = ['surat', 'Area69', 'India', 'Bangalore']
-
-    users = User.objects.all()
-    for user in users:
-        for fname in xwords:
-            for lname in ywords:
-                for desc in gibberish:
-                    for ven in loc:
-                        new_job = JobPost(
-                            recruiter=user, title=f'{fname} {lname}', description=desc, location=ven)
-                        new_job.save()
-                        print('Success')
-
-
 @login_required
 def apply(request, job_id):
     applicant = request.user
@@ -173,3 +152,16 @@ def apply(request, job_id):
         'form': form,
     }
     return render(request, 'jobs/job_application.html', context)
+
+
+class JobApplicationDetailView(DetailView):
+    model = JobApplication
+
+    def get_context_data(self, **kwargs):
+        context = super(JobApplicationDetailView,
+                        self).get_context_data(**kwargs)
+        logged_user = self.request.user
+        application = self.get_object()
+        if logged_user == application.job.recruiter:
+            context['is_recruiter'] = 1
+        return context
