@@ -1,0 +1,36 @@
+{% extends 'jobs/base.html' %} {% block content %}
+<article class="content-section">
+	<div class="job-update">
+		<div>
+			<!-- <a class="mr-2" href="#">{{ object.recruiter }}</a> -->
+			<p>{{ object.date_applied | date:"F d, Y" }}</p>
+		</div>
+		<h2 class="article-title">Job : {{ object.title }}</h2>
+		<p class="article-content">Description : {{ object.description }}</p>
+		<p class="font-weight-bold">{{ object.location }}</p>
+		<p class="font-weight-light">Posted By : {{ object.recruiter }}</p>
+	</div>
+	{% if is_recruiter %} {% for application in applications %}
+	<div class="job-update my-3">
+		<h2 class="article-title">Full Name : {{ application.full_name }}</h2>
+		<p class="article-content">Address : {{ application.address }}</p>
+		{% if application.resume %}
+		<p class="font-weight-bold">Resume: {{ application.resume.url }}</p>
+		{% endif %}
+		<p class="font-weight-light">Email : {{ application.email }}</p>
+		{% if application.additional_info %}
+		<h4>Additional Info</h4>
+		<p class="font-weight-light">{{ application.additional_info }}</p>
+		{% endif %}
+	</div>
+	<div>
+		<a class="btn btn-sm btn-outline-success my-1 mx-1" href="#"
+			>Confirm Selection</a
+		>
+		<a class="btn btn-sm btn-outline-danger my-1 mx-1" href="#"
+			>Reject Application</a
+		>
+	</div>
+	{% endfor %} {% endif %}
+</article>
+{% endblock content %}

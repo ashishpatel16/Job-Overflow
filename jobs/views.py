@@ -165,3 +165,18 @@ class JobApplicationDetailView(DetailView):
         if logged_user == application.job.recruiter:
             context['is_recruiter'] = 1
         return context
+
+
+def view_applications(request, pk):
+    obj = JobApplication.objects.filter(id=pk)
+    logged_user = request.user
+    rec = obj.first().job.recruiter
+    if logged_user == rec:
+        is_rec = 1
+
+    context = {
+        'applications': obj,
+        'object': JobPost.objects.filter(id=pk).first(),
+        'is_recruiter': is_rec
+    }
+    return render(request, 'jobs/view_applications.html', context)

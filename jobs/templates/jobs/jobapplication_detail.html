@@ -14,14 +14,27 @@
 	<div class="job-update my-3">
 		<h2 class="article-title">Full Name : {{ object.full_name }}</h2>
 		<p class="article-content">Address : {{ object.address }}</p>
+		{% if object.resume %}
 		<p class="font-weight-bold">Resume: {{ object.resume.url }}</p>
+		{% endif %}
 		<p class="font-weight-light">Email : {{ object.email }}</p>
 		{% if object.additional_info %}
 		<h4>Additional Info</h4>
 		<p class="font-weight-light">{{ object.additional_info }}</p>
 		{% endif %}
 	</div>
-	<div></div>
+	<div>
+		<a
+			class="btn btn-sm btn-outline-success my-1 mx-1"
+			href="#"
+			>Confirm Selection</a
+		>
+		<a
+			class="btn btn-sm btn-outline-danger my-1 mx-1"
+			href="#"
+			>Reject Application</a
+		>
+	</div>
 	{% endif %}
 </article>
 {% endblock content %}

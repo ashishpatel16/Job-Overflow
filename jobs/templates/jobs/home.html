@@ -24,7 +24,7 @@
         <h3>TOP RECRUITERS</h3>
         <hr>
         <div>
-            <p>Idhar maine thoda aalas karke, jo images already thi laptop mein, vo daal di! Ye change karna h baadmein
+            <p>Job Overflow has helped following organisaions pick the perfect candidate for their needs.
             </p>
             <img src="{% static 'jobs/images/1.png' %}" alt="rec1">
             <img src="{% static 'jobs/images/2.png' %}" alt="rec2">
@@ -65,6 +65,8 @@
                 
                 <p>Description <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                     {{ job.description }}</a></p>
+                <p>Posted <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    {{ job.date_posted }}</a></p>
             </div>
             <!-- Apply button  -->
             <div class="apply-btn">

@@ -49,7 +49,9 @@
 			<div>
 				<ul>
 					{% for job in posted_jobs %}
-					<a href="{% url 'jobs-detail' job.pk %}"><li>{{ job.title }}</li></a>
+					<a href="{% url 'view-application' job.pk %}"
+						><li>{{ job.title }}</li></a
+					>
 					{% endfor %}
 				</ul>
 			</div>

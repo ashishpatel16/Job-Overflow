@@ -63,6 +63,3 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return self.job.title
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)

@@ -3,6 +3,10 @@ from seekers import views as seeker_views
 from django.urls import path, include
 from .views import JobListView, JobCreateView, JobUpdateView, JobDeleteView, JobDetailView, JobApplicationDetailView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('', JobListView.as_view(), name='jobs-home'),
     path('jobs/new/', JobCreateView.as_view(), name='jobs-create'),
@@ -17,4 +21,11 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('jobs/applications/<int:pk>/',
          JobApplicationDetailView.as_view(), name='jobapplication-detail'),
+    path('jobs/application/<int:pk>/',
+         views.view_applications, name='view-application'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
